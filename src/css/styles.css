@@ -1,0 +1,51 @@
+@import './rangeSlider.css';
+
+:root {
+  --sliderColour: #2C3E50;
+}
+
+body {
+  font-family: Helvetica, sans-serif;
+  font-weight: 100;
+  background-color: #2c3e50;
+}
+
+h1{
+  color: #ecf0f1;
+  text-align: center;
+}
+
+.playPauseBtn {
+  border-radius: none;
+  padding: 20px 10px;
+  width: 100%;
+  margin: 30px 0 20px;
+  border: 1px solid #bdc3c7;
+  background-color: transparent;
+  font-family: Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.controls {
+  padding: 20px 40px;
+  border-radius: 5px;
+  background-color: #ecf0f1;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 1px 1px 10px #333;
+}
+
+.row {
+  width: 100%;
+}
+
+.slider {
+  width: 100%;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between; 
+}

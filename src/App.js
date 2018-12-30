@@ -16,8 +16,6 @@ class App extends Component {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
     this.metronomeObject = '';
-    this.minTempo = 30;
-    this.maxTempo = 290;
     this.counter = 0;
   }
 
@@ -69,12 +67,26 @@ class App extends Component {
     const { isPlaying, bars, tempo } = this.state;
     return (
       <div>
-        <h1>Metronomy v1</h1>
-        <button type="submit" onClick={this.playPauseHandler}>{isPlaying ? 'STOP' : 'PLAY'}</button>
-        <input type="range" value={tempo} min={this.minTempo} max={this.maxTempo} onChange={this.changeTempo} />
-        <span>{tempo}</span>
-        <input type="range" value={bars} min="1" max="30" onChange={this.changeBars} />
-        <span>{bars}</span>
+        <h1>THE METRONOME</h1>
+        <div className="controls">
+          <div className="row">
+            <div className="title">
+              <h2>TEMPO</h2>
+              <h2>{tempo}</h2>
+            </div>
+            <input type="range" value={tempo} min="30" max="290" className="slider" onChange={this.changeTempo} />
+          </div>
+          <div className="row">
+            <div className="title">
+              <h2>BARS</h2>
+              <h2>{bars}</h2>  
+            </div>
+            <input type="range" value={bars} min="1" max="30" className="slider" onChange={this.changeBars} />
+          </div>
+          <div className="row">
+            <button className="playPauseBtn" type="submit" onClick={this.playPauseHandler}>{isPlaying ? 'STOP' : 'PLAY'}</button>
+          </div>
+        </div>
       </div>
     );
   }
