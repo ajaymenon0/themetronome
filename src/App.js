@@ -13,25 +13,30 @@ class App extends Component {
       isPlaying: false,
       tempo: 60,
       bars: 2,
+      beatCounter: 0,
     };
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
     this.metronomeObject = '';
-    this.counter = 0;
   }
 
   onPlayPause() {
     const osc = this.audioCtx.createOscillator();
-    const { bars } = this.state;
+    const { bars, beatCounter } = this.state;
     osc.type = 'triangle';
-    osc.detune.value = this.counter % 4 === 0 ? 1200 : 900;
-    this.counter = this.counter + 1;
+    osc.detune.value = beatCounter % 4 === 0 ? 1200 : 900;
     osc.connect(this.audioCtx.destination);
     osc.start();
     osc.stop(this.audioCtx.currentTime + 0.05);
-    if (this.counter >= bars * 4) {
+    if (beatCounter + 1 >= bars * 4) {
       this.playPauseHandler();
-      this.counter = 0;
+      this.setState({
+        beatCounter: 0,
+      });
+    } else {
+      this.setState({
+        beatCounter: beatCounter + 1,
+      });
     }
   }
 
@@ -61,11 +66,12 @@ class App extends Component {
   changeTempo(event) {
     this.setState({
       tempo: event.target.value,
+      beatCounter: 0,
     }, () => this.metronome());
   }
 
   render() {
-    const { isPlaying, bars, tempo } = this.state;
+    const { isPlaying, bars, tempo, beatCounter } = this.state;
     return (
       <div>
         <h1>THE METRONOME</h1>
@@ -80,7 +86,7 @@ class App extends Component {
           <div className="row">
             <div className="title">
               <h2>BARS</h2>
-              <h2>{bars}</h2>  
+              <h2>{isPlaying ? `${Math.ceil(beatCounter / 4)} / ${bars}` : bars}</h2>
             </div>
             <input type="range" value={bars} min="1" max="30" className="slider" onChange={this.changeBars} />
           </div>
