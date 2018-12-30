@@ -2,12 +2,14 @@
 
 :root {
   --sliderColour: #2C3E50;
+  --green: #2ecc71;
+  --danger: #e74c3c;
 }
 
 body {
   font-family: Helvetica, sans-serif;
   font-weight: 100;
-  background-color: #2c3e50;
+  background-color: #34495e;
 }
 
 h1{
@@ -19,17 +21,31 @@ h1{
   border-radius: none;
   padding: 20px 10px;
   width: 100%;
-  margin: 30px 0 20px;
+  margin: 20px 0;
   border: 1px solid #bdc3c7;
-  background-color: #2ecc71;
+  background-color: var(--green);
   font-family: Helvetica, sans-serif;
   font-size: 25px;
   font-weight: bold;
   border-radius: 5px;
 }
 
+.addSet {
+  text-align: center;
+  padding: 20px;
+}
+
+.addSetBtn {
+  padding: 10px 15px;
+  width: 50%;
+  font-size: 32px;
+  font-weight: bold;
+  border-radius: 5px;
+  background-color: var(--green);
+}
+
 .stopped {
-  background-color: #e74c3c;
+  background-color: var(--danger);
 }
 
 .controls {

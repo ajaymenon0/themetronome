@@ -17,6 +17,7 @@ This process can be automated if the various tempos and duration of bars can be 
 ---
 - [x] Simple metronome based on setInterval
 - [x] Ability to modify tempo and number of bars
+- [ ] Add visual que for metronome usage
 - [ ] Add various other tempos and bar duration and create a list/set for practice routine
 - [ ] Support other time signatures such as 3/4, 7/8 etc
 - [ ] Settings to change metronome sound and levels

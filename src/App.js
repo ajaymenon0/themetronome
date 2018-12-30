@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import MetronomeItem from './MetronomeItem';
 
 class App extends Component {
   constructor(props) {
@@ -77,21 +78,18 @@ class App extends Component {
         <h1>THE METRONOME</h1>
         <div className="controls">
           <div className="row">
-            <div className="title">
-              <h2>TEMPO</h2>
-              <h2>{tempo}</h2>
-            </div>
-            <input type="range" value={tempo} min="30" max="290" className="slider" onChange={this.changeTempo} />
-          </div>
-          <div className="row">
-            <div className="title">
-              <h2>BARS</h2>
-              <h2>{isPlaying ? `${Math.ceil(beatCounter / 4)} / ${bars}` : bars}</h2>
-            </div>
-            <input type="range" value={bars} min="1" max="30" className="slider" onChange={this.changeBars} />
-          </div>
-          <div className="row">
             <button className={classnames('playPauseBtn', { stopped: isPlaying })} type="submit" onClick={this.playPauseHandler}>{isPlaying ? 'STOP' : 'PLAY'}</button>
+          </div>
+          <MetronomeItem
+            tempo={tempo}
+            isPlaying={isPlaying}
+            bars={bars}
+            beatCounter={beatCounter}
+            handleTempoChange={this.changeTempo}
+            handleBarChange={this.changeBars}
+          />
+          <div className="row addSet">
+            <button type="button" className="addSetBtn">+</button>
           </div>
         </div>
       </div>
