@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 class App extends Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class App extends Component {
             <input type="range" value={bars} min="1" max="30" className="slider" onChange={this.changeBars} />
           </div>
           <div className="row">
-            <button className="playPauseBtn" type="submit" onClick={this.playPauseHandler}>{isPlaying ? 'STOP' : 'PLAY'}</button>
+            <button className={classnames('playPauseBtn', { stopped: isPlaying })} type="submit" onClick={this.playPauseHandler}>{isPlaying ? 'STOP' : 'PLAY'}</button>
           </div>
         </div>
       </div>
