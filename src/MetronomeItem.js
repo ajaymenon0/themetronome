@@ -1,25 +1,25 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const MetronomeItem = ({
-  tempo, bars, isPlaying, handleTempoChange, handleBarChange, beatCounter,
+  tempo, bars, isPlaying, handleTempoChange, handleBarChange, beatCounter, indexValue, currentIndexValue,
 }) => (
-  <Fragment>
+  <div className="metronome">
     <div className="row">
       <div className="title">
         <h2>TEMPO</h2>
         <h2>{tempo}</h2>
       </div>
-      <input type="range" value={tempo} min="30" max="290" className="slider" onChange={handleTempoChange} />
+      <input type="range" disabled={isPlaying} value={tempo} indexvalue={indexValue} min="30" max="290" step="5" className="slider" onChange={handleTempoChange} />
     </div>
     <div className="row">
       <div className="title">
         <h2>BARS</h2>
-        <h2>{isPlaying ? `${Math.ceil(beatCounter / 4)} / ${bars}` : bars}</h2>
+        <h2>{isPlaying && (indexValue === currentIndexValue) && (beatCounter !== 0) ? `${Math.ceil(beatCounter / 4)} / ${bars}` : bars}</h2>
       </div>
-      <input type="range" value={bars} min="1" max="30" className="slider" onChange={handleBarChange} />
+      <input type="range" disabled={isPlaying} value={bars} indexvalue={indexValue} min="1" max="30" className="slider" onChange={handleBarChange} />
     </div>
-  </Fragment>
+  </div>
 );
 
 MetronomeItem.defaultProps = {
@@ -29,6 +29,7 @@ MetronomeItem.defaultProps = {
   beatCounter: 0,
   handleTempoChange: () => {},
   handleBarChange: () => {},
+  indexValue: 0,
 };
 
 MetronomeItem.propTypes = {
@@ -38,6 +39,7 @@ MetronomeItem.propTypes = {
   beatCounter: PropTypes.number,
   handleTempoChange: PropTypes.func,
   handleBarChange: PropTypes.func,
+  indexValue: PropTypes.number,
 };
 
 export default MetronomeItem;
