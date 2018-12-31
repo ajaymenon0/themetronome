@@ -10,17 +10,18 @@ class App extends Component {
     this.playPauseHandler = this.playPauseHandler.bind(this);
     this.changeTempo = this.changeTempo.bind(this);
     this.changeBars = this.changeBars.bind(this);
+    this.addMetronome = this.addMetronome.bind(this);
     this.state = {
       isPlaying: false,
-      tempo: [60, 120],
-      bars: [2, 3],
+      tempo: [160],
+      bars: [1],
       beatCounter: 0,
     };
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
     this.metronomeObject = '';
     this.indexOfMetronomes = 0;
-    this.totalMetronomes = 2;
+    this.totalMetronomes = 1;
   }
 
   onPlayPause() {
@@ -84,10 +85,33 @@ class App extends Component {
     }, () => this.metronome());
   }
 
+  addMetronome() {
+    const { tempo, bars } = this.state;
+    const tempTempo = [...tempo];
+    const tempBars = [...bars];
+    tempTempo.push(60);
+    tempBars.push(1);
+    this.totalMetronomes = this.totalMetronomes + 1;
+    this.setState({
+      tempo: tempTempo,
+      bars: tempBars,
+    });
+  }
+
   render() {
     const {
       isPlaying, bars, tempo, beatCounter,
     } = this.state;
+    const children = tempo.map((unit, index) => React.cloneElement(<MetronomeItem />, {
+      tempo: tempo[index],
+      isPlaying,
+      bars: bars[index],
+      beatCounter,
+      handleTempoChange: this.changeTempo,
+      handleBarChange: this.changeBars,
+      metronomeIndex: index,
+      currentIndexValue: this.indexOfMetronomes,
+    }));
     return (
       <div>
         <h1>THE METRONOME</h1>
@@ -95,29 +119,10 @@ class App extends Component {
           <div className="row">
             <button className={classnames('playPauseBtn', { stopped: isPlaying })} type="submit" onClick={this.playPauseHandler}>{isPlaying ? 'STOP' : 'PLAY'}</button>
           </div>
-          <MetronomeItem
-            tempo={tempo[0]}
-            isPlaying={isPlaying}
-            bars={bars[0]}
-            beatCounter={beatCounter}
-            handleTempoChange={this.changeTempo}
-            handleBarChange={this.changeBars}
-            indexValue={0}
-            currentIndexValue={this.indexOfMetronomes}
-          />
-          <MetronomeItem
-            tempo={tempo[1]}
-            isPlaying={isPlaying}
-            bars={bars[1]}
-            beatCounter={beatCounter}
-            handleTempoChange={this.changeTempo}
-            handleBarChange={this.changeBars}
-            indexValue={1}
-            currentIndexValue={this.indexOfMetronomes}
-          />
-          {/* <div className="row addSet">
-            <button type="button" className="addSetBtn">+</button>
-          </div> */}
+          {children}
+          <div className="row addSet">
+            <button type="button" className="addSetBtn" onClick={this.addMetronome}>+</button>
+          </div>
         </div>
       </div>
     );
