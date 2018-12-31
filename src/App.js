@@ -13,7 +13,7 @@ class App extends Component {
     this.addMetronome = this.addMetronome.bind(this);
     this.state = {
       isPlaying: false,
-      tempo: [160],
+      tempo: [120],
       bars: [1],
       beatCounter: 0,
     };
@@ -89,7 +89,7 @@ class App extends Component {
     const { tempo, bars } = this.state;
     const tempTempo = [...tempo];
     const tempBars = [...bars];
-    tempTempo.push(60);
+    tempTempo.push(120);
     tempBars.push(1);
     this.totalMetronomes = this.totalMetronomes + 1;
     this.setState({
