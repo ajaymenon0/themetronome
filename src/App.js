@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import MetronomeItem from './MetronomeItem';
+import Worker from './timer.worker';
 
 class App extends Component {
   constructor(props) {
@@ -19,9 +20,9 @@ class App extends Component {
     };
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.audioCtx = new AudioContext();
-    this.metronomeObject = '';
     this.indexOfMetronomes = 0;
     this.totalMetronomes = 1;
+    this.worker = new Worker();
   }
 
   onPlayPause() {
@@ -41,8 +42,9 @@ class App extends Component {
       this.setState({
         beatCounter: 0,
       });
-    } else {
+      this.worker.postMessage(0);
       this.metronome();
+    } else {
       this.setState({
         beatCounter: beatCounter + 1,
       });
@@ -56,13 +58,14 @@ class App extends Component {
 
   metronome() {
     const { isPlaying, tempo } = this.state;
+    const interval = (60 / tempo[this.indexOfMetronomes]) * 1000;
     if (isPlaying) {
-      clearInterval(this.metronomeObject);
-      this.metronomeObject = setInterval(() => {
+      this.worker.postMessage(interval);
+      this.worker.onmessage = () => {
         this.onPlayPause();
-      }, (60 / tempo[this.indexOfMetronomes]) * 1000);
+      };
     } else {
-      clearInterval(this.metronomeObject);
+      this.worker.postMessage(0);
     }
   }
 
@@ -72,7 +75,7 @@ class App extends Component {
     const tempBar = Object.assign([...bars], { [indexvalue]: parseInt(event.target.value, 10) });
     this.setState({
       bars: tempBar,
-    }, () => this.metronome());
+    });
   }
 
   changeTempo(event) {
@@ -82,7 +85,7 @@ class App extends Component {
     this.setState({
       tempo: tempTempo,
       beatCounter: 0,
-    }, () => this.metronome());
+    });
   }
 
   addMetronome() {

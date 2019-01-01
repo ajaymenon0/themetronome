@@ -17,14 +17,14 @@ const MetronomeItem = ({
         <h2>TEMPO</h2>
         <h2>{tempo}</h2>
       </div>
-      <input type="range" disabled={isPlaying} value={tempo} indexValue={metronomeIndex} min="30" max="290" step="5" className="slider" onChange={handleTempoChange} />
+      <input type="range" disabled={isPlaying} value={tempo} indexvalue={metronomeIndex} min="30" max="290" step="5" className="slider" onChange={handleTempoChange} />
     </div>
     <div className="row">
       <div className="title">
         <h2>BARS</h2>
         <h2>{isPlaying && (metronomeIndex === currentIndexValue) && (beatCounter !== 0) ? `${Math.ceil(beatCounter / 4)} / ${bars}` : bars}</h2>
       </div>
-      <input type="range" disabled={isPlaying} value={bars} indexValue={metronomeIndex} min="1" max="30" className="slider" onChange={handleBarChange} />
+      <input type="range" disabled={isPlaying} value={bars} indexvalue={metronomeIndex} min="1" max="30" className="slider" onChange={handleBarChange} />
     </div>
   </div>
 );
